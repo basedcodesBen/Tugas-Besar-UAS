@@ -5,35 +5,35 @@ function addLighting(scene) {
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
   scene.add(ambientLight);
 
+  function addWallSpotlight(scene, position, targetPosition) {
+    const spotlight = new THREE.SpotLight(0xffffff, 1);
+    spotlight.angle = Math.PI / 6;
+    spotlight.penumbra = 0.3;
+    spotlight.decay = 2;
+    spotlight.distance = 15;
+    spotlight.position.copy(position);
+
+    const target = new THREE.Object3D();
+    target.position.copy(targetPosition);
+    scene.add(target);
+
+    spotlight.target = target;
+    scene.add(spotlight);
+  }
+
   // Tambahkan pencahayaan pada setiap tembok menggunakan spotlight
 
   // Cahaya di tembok depan
-  const frontWallLight = new THREE.SpotLight(0xffffff, 1);
-  frontWallLight.position.set(0, 5, -9.5);
-  frontWallLight.angle = Math.PI / 6;
-  frontWallLight.penumbra = 0.3;
-  scene.add(frontWallLight);
+  addWallSpotlight(scene, new THREE.Vector3(0, 5, -9.5), new THREE.Vector3(0, 5, -10));
 
   // Cahaya di tembok belakang
-  const backWallLight = new THREE.SpotLight(0xffffff, 1);
-  backWallLight.position.set(0, 5, 9.5);
-  backWallLight.angle = Math.PI / 6;
-  backWallLight.penumbra = 0.3;
-  scene.add(backWallLight);
+  addWallSpotlight(scene, new THREE.Vector3(0, 5, 9.5), new THREE.Vector3(0, 5, 10));
 
   // Cahaya di tembok kiri
-  const leftWallLight = new THREE.SpotLight(0xffffff, 1);
-  leftWallLight.position.set(-9.5, 5, 0);
-  leftWallLight.angle = Math.PI / 6;
-  leftWallLight.penumbra = 0.3;
-  scene.add(leftWallLight);
+  addWallSpotlight(scene, new THREE.Vector3(-9.5, 5, 0), new THREE.Vector3(-10, 5, 0));
 
   // Cahaya di tembok kanan
-  const rightWallLight = new THREE.SpotLight(0xffffff, 1);
-  rightWallLight.position.set(9.5, 5, 0);
-  rightWallLight.angle = Math.PI / 6;
-  rightWallLight.penumbra = 0.3;
-  scene.add(rightWallLight);
+  addWallSpotlight(scene, new THREE.Vector3(9.5, 5, 0), new THREE.Vector3(10, 5, 0));
 }
 
 export { addLighting };
