@@ -6,7 +6,7 @@ function addLighting(scene) {
   scene.add(ambientLight);
 
   function addWallSpotlight(scene, position, targetPosition) {
-    const spotlight = new THREE.SpotLight(0xffffff, 1);
+    const spotlight = new THREE.SpotLight(0xffffff, 10);
     spotlight.angle = Math.PI / 6;
     spotlight.penumbra = 0.3;
     spotlight.decay = 2;
@@ -20,19 +20,17 @@ function addLighting(scene) {
     spotlight.target = target;
     scene.add(spotlight);
   }
+  // tembok depan
+  addWallSpotlight(scene, new THREE.Vector3(-4,8,-9.5), new THREE.Vector3(-4,5,-10));
+  addWallSpotlight(scene, new THREE.Vector3(4,8,-9.5), new THREE.Vector3(4,5,-10));
 
-  // Tambahkan pencahayaan pada setiap tembok menggunakan spotlight
+  // tembok belakang
+  addWallSpotlight(scene, new THREE.Vector3(0, 5, 9.5), new THREE.Vector3(0, 2, 10));
 
-  // Cahaya di tembok depan
-  addWallSpotlight(scene, new THREE.Vector3(0, 5, -9.5), new THREE.Vector3(0, 5, -10));
+  // tembok kiri
+  addWallSpotlight(scene, new THREE.Vector3(-9.5, 8, 0), new THREE.Vector3(-10, 5, 0));
 
-  // Cahaya di tembok belakang
-  addWallSpotlight(scene, new THREE.Vector3(0, 5, 9.5), new THREE.Vector3(0, 5, 10));
-
-  // Cahaya di tembok kiri
-  addWallSpotlight(scene, new THREE.Vector3(-9.5, 5, 0), new THREE.Vector3(-10, 5, 0));
-
-  // Cahaya di tembok kanan
+  // tembok kanan
   addWallSpotlight(scene, new THREE.Vector3(9.5, 5, 0), new THREE.Vector3(10, 5, 0));
 }
 
