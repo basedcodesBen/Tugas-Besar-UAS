@@ -14,5 +14,5 @@ export function createRoom(scene, position, width, depth, height, textures) {
   addCeiling(scene, ceilingPosition, width, depth, ceilingTexture);
 
   // Walls
-  addWalls(scene, position, width, depth, height, wallTexture);
+  addWalls(scene);
 }

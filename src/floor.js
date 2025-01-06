@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 function addFloor(scene) {
   const textureLoader = new THREE.TextureLoader();
-  const floorGeometry = new THREE.PlaneGeometry(20, 20);
+  const floorGeometry = new THREE.PlaneGeometry(30, 30);
   floorGeometry.attributes.uv2 = floorGeometry.attributes.uv;
 
   const floorMaterial = new THREE.MeshStandardMaterial({

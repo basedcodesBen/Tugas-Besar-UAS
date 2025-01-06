@@ -26,7 +26,7 @@ function addArtworks(scene) {
   scene.add(artwork2);
 
   const artwork3 = new THREE.Mesh(artworkGeometry, artworkMaterial3);
-  artwork3.position.set(-9.9, 5, 0); // On the left wall
+  artwork3.position.set(-14.9, 5, 0); // On the left wall
   artwork3.rotation.y = Math.PI / 2;
   scene.add(artwork3);
 }

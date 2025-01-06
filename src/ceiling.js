@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 function addCeiling(scene) {
   const textureLoader = new THREE.TextureLoader();
-  const ceilingGeometry = new THREE.PlaneGeometry(20, 20);
+  const ceilingGeometry = new THREE.PlaneGeometry(30, 30);
   ceilingGeometry.attributes.uv2 = ceilingGeometry.attributes.uv; // Enable AO map support
 
   const ceilingMaterial = new THREE.MeshStandardMaterial({

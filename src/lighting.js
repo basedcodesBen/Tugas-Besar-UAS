@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 function addLighting(scene) {
   // Tambahkan ambient light untuk pencahayaan umum
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
   scene.add(ambientLight);
 
   function addWallSpotlight(scene, position, targetPosition) {
@@ -28,10 +28,10 @@ function addLighting(scene) {
   addWallSpotlight(scene, new THREE.Vector3(0, 5, 9.5), new THREE.Vector3(0, 2, 10));
 
   // tembok kiri
-  addWallSpotlight(scene, new THREE.Vector3(-9.5, 8, 0), new THREE.Vector3(-10, 5, 0));
+  addWallSpotlight(scene, new THREE.Vector3(-9, 8, 0), new THREE.Vector3(-8.5, 5, 0));
 
   // tembok kanan
-  addWallSpotlight(scene, new THREE.Vector3(9.5, 5, 0), new THREE.Vector3(10, 5, 0));
+//   addWallSpotlight(scene, new THREE.Vector3(9.5, 5, 0), new THREE.Vector3(10, 5, 0));
 }
 
 export { addLighting };
