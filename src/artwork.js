@@ -18,11 +18,11 @@ function addArtworks(scene) {
 
   // Artwork meshes
   const artwork1 = new THREE.Mesh(artworkGeometry, artworkMaterial1);
-  artwork1.position.set(-4, 5, -9.9); // Left side of the back wall
+  artwork1.position.set(-4, 5, -14.9); // Left side of the back wall
   scene.add(artwork1);
 
   const artwork2 = new THREE.Mesh(artworkGeometry, artworkMaterial2);
-  artwork2.position.set(4, 5, -9.9); // Right side of the back wall
+  artwork2.position.set(4, 5, -14.9); // Right side of the back wall
   scene.add(artwork2);
 
   const artwork3 = new THREE.Mesh(artworkGeometry, artworkMaterial3);

@@ -36,7 +36,7 @@ function setupControls(camera, canvas) {
     camera.getWorldDirection(direction);
 
     const fixedY = camera.position.y;
-    const speed = 0.1;
+    const speed = 0.3;
 
     if (keys['w']) camera.position.addScaledVector(direction, speed);
     if (keys['s']) camera.position.addScaledVector(direction, -speed);
