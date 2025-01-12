@@ -11,7 +11,7 @@ function addArtworks(scene) {
   const artworkMaterial2 = new THREE.MeshStandardMaterial({ map: artworkTexture2 });
   const artworkMaterial3 = new THREE.MeshStandardMaterial({ map: artworkTexture3 });
 
-  const artworkGeometry = new THREE.PlaneGeometry(2, 3);
+  const artworkGeometry = new THREE.PlaneGeometry(3, 4);
 
   const artwork1 = new THREE.Mesh(artworkGeometry, artworkMaterial1);
   artwork1.position.set(-39.9, 5, -5);
@@ -23,7 +23,7 @@ function addArtworks(scene) {
   scene.add(artwork2);
 
   const artwork3 = new THREE.Mesh(artworkGeometry, artworkMaterial3);
-  artwork3.position.set(-39.9, 5, 5);
+  artwork3.position.set(-39.7, 5.5, 3.15);
   artwork3.rotation.y = Math.PI / 2;
   scene.add(artwork3);
 }
