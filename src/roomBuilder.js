@@ -1,11 +1,12 @@
 import * as THREE from 'three';
-import { createFloorMaterial } from './components/floor';
-import { createWallMaterial } from './components/walls';
-import { createCeilingMaterial } from './components/ceiling';
+import { createFloorMaterial } from './components/floor.js';
+import { createWallMaterial } from './components/walls.js';
+import { createCeilingMaterial } from './components/ceiling.js';
 
 class RoomBuilder {
   constructor(scene) {
     this.scene = scene;
+    this.collidableMeshes = []; // Store walls for collision detection
   }
 
   addRoom(x, z, width, height, hasOpenings = {}) {
@@ -32,6 +33,7 @@ class RoomBuilder {
       const backWall = new THREE.Mesh(wallGeometry, wallMaterial);
       backWall.position.set(x, 5, z - height / 2);
       this.scene.add(backWall);
+      this.collidableMeshes.push(backWall); // Add for collision detection
     }
 
     if (!hasOpenings.front) {
@@ -39,6 +41,7 @@ class RoomBuilder {
       frontWall.rotation.y = Math.PI;
       frontWall.position.set(x, 5, z + height / 2);
       this.scene.add(frontWall);
+      this.collidableMeshes.push(frontWall);
     }
 
     const sideWallGeometry = new THREE.PlaneGeometry(height, 10);
@@ -48,6 +51,7 @@ class RoomBuilder {
       leftWall.rotation.y = Math.PI / 2;
       leftWall.position.set(x - width / 2, 5, z);
       this.scene.add(leftWall);
+      this.collidableMeshes.push(leftWall);
     }
 
     if (!hasOpenings.right) {
@@ -55,10 +59,10 @@ class RoomBuilder {
       rightWall.rotation.y = -Math.PI / 2;
       rightWall.position.set(x + width / 2, 5, z);
       this.scene.add(rightWall);
+      this.collidableMeshes.push(rightWall);
     }
   }
 
-  // New method for hallways
   addHallway(x, z, length, width, orientation = 'horizontal') {
     const floorMaterial = createFloorMaterial();
     const wallMaterial = createWallMaterial();
@@ -77,39 +81,55 @@ class RoomBuilder {
     this.scene.add(ceiling);
 
     // Walls
-    const wallGeometry = new THREE.PlaneGeometry(width, 10);
+    if (orientation === 'horizontal') {
+        // Horizontal walls
+        const wallGeometry = new THREE.PlaneGeometry(length, 10); // Match length for front and back walls
+        const backWall = new THREE.Mesh(wallGeometry, wallMaterial);
+        backWall.position.set(x, 5, z - width / 2); // Positioned correctly for horizontal orientation
+        this.scene.add(backWall);
+        this.collidableMeshes.push(backWall);
 
-    if (orientation === 'longitudinal') {
-      const leftWall = new THREE.Mesh(wallGeometry, wallMaterial);
-      leftWall.rotation.y = Math.PI / 2;
-      leftWall.position.set(x - length / 2, 5, z);
-      this.scene.add(leftWall);
+        const frontWall = new THREE.Mesh(wallGeometry, wallMaterial);
+        frontWall.rotation.y = Math.PI;
+        frontWall.position.set(x, 5, z + width / 2); // Positioned correctly for horizontal orientation
+        this.scene.add(frontWall);
+        this.collidableMeshes.push(frontWall);
+    } else if (orientation === 'longitudinal') {
+        // Longitudinal walls
+        const wallGeometry = new THREE.PlaneGeometry(width, 10); // Match width for left and right walls
+        const leftWall = new THREE.Mesh(wallGeometry, wallMaterial);
+        leftWall.rotation.y = Math.PI / 2;
+        leftWall.position.set(x - length / 2, 5, z); // Positioned correctly for longitudinal orientation
+        this.scene.add(leftWall);
+        this.collidableMeshes.push(leftWall);
 
-      const rightWall = new THREE.Mesh(wallGeometry, wallMaterial);
-      rightWall.rotation.y = -Math.PI / 2;
-      rightWall.position.set(x + length / 2, 5, z);
-      this.scene.add(rightWall);
-    } else {
-      const backWall = new THREE.Mesh(wallGeometry, wallMaterial);
-      backWall.position.set(x, 5, z - width / 2);
-      this.scene.add(backWall);
-
-      const frontWall = new THREE.Mesh(wallGeometry, wallMaterial);
-      frontWall.rotation.y = Math.PI;
-      frontWall.position.set(x, 5, z + width / 2);
-      this.scene.add(frontWall);
+        const rightWall = new THREE.Mesh(wallGeometry, wallMaterial);
+        rightWall.rotation.y = -Math.PI / 2;
+        rightWall.position.set(x + length / 2, 5, z); // Positioned correctly for longitudinal orientation
+        this.scene.add(rightWall);
+        this.collidableMeshes.push(rightWall);
     }
   }
 
-  addRoomsWithHallway() {
-    // First room
-    this.addRoom(-30, 0, 20, 20, { right: true });
+  addWall(x, y, z, width, height, rotationY = 0) {
+    const wallMaterial = createWallMaterial();
+    const wall = new THREE.Mesh(new THREE.PlaneGeometry(width, height), wallMaterial);
+    wall.position.set(x, y, z);
+    wall.rotation.y = rotationY;
+    this.scene.add(wall);
+    this.collidableMeshes.push(wall);
+    return wall;
+  }
 
-    // Hallway
-    this.addHallway(0, 0, 40, 5, 'horizontal'); // Narrower hallway
-
-    // Second room
-    this.addRoom(30, 0, 20, 20, { left: true });
+  detectCollisions(playerPosition) {
+    const playerBox = new THREE.Box3().setFromCenterAndSize(playerPosition, new THREE.Vector3(1, 1, 1));
+    for (const mesh of this.collidableMeshes) {
+      const meshBox = new THREE.Box3().setFromObject(mesh);
+      if (playerBox.intersectsBox(meshBox)) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 
