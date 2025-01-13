@@ -6,6 +6,10 @@ camera.position.set(-30, 5, 0);
 const keys = {};
 let yaw = -1, pitch = 0;
 
+// Create a raycaster and mouse vector
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2(0, 0);
+
 function setupControls(camera, canvas, roomBuilder) {
   canvas.addEventListener('click', () => {
     canvas.requestPointerLock();
@@ -66,4 +70,11 @@ function setupControls(camera, canvas, roomBuilder) {
   animate();
 }
 
-export { camera, setupControls };
+// Raycasting utility to detect objects in front of the camera
+function detectObjectInFront(objects) {
+  raycaster.setFromCamera(mouse, camera);
+  const intersects = raycaster.intersectObjects(objects, true); // Check recursively
+  return intersects.length > 0 ? intersects[0].object : null;
+}
+
+export { camera, setupControls, detectObjectInFront, keys };

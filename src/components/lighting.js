@@ -1,16 +1,16 @@
 import * as THREE from 'three';
 
 function addLighting(scene) {
-  // Tambahkan ambient light untuk pencahayaan umum
+  // Add ambient light for general illumination
   const ambientLight = new THREE.AmbientLight(0xffffff, 2);
   scene.add(ambientLight);
 
-  function addWallSpotlight(scene, position, targetPosition) {
-    const spotlight = new THREE.SpotLight(0xffffff, 20);
+  function addSpotlight(scene, position, targetPosition, color = 0xffffff, intensity = 50, distance = 50) {
+    const spotlight = new THREE.SpotLight(color, intensity);
     spotlight.angle = Math.PI / 6;
     spotlight.penumbra = 0.3;
     spotlight.decay = 2;
-    spotlight.distance = 15;
+    spotlight.distance = distance;
     spotlight.position.copy(position);
 
     const target = new THREE.Object3D();
@@ -20,18 +20,14 @@ function addLighting(scene) {
     spotlight.target = target;
     scene.add(spotlight);
   }
-  // tembok depan
-  addWallSpotlight(scene, new THREE.Vector3(-4,8,-12), new THREE.Vector3(-4,5,-15));
-  addWallSpotlight(scene, new THREE.Vector3(4,8,-12), new THREE.Vector3(4,5,-15));
 
-  // tembok belakang
-  addWallSpotlight(scene, new THREE.Vector3(-10, 5, 10), new THREE.Vector3(-10, 5, 9.9));
-
-  // tembok kiri
-  addWallSpotlight(scene, new THREE.Vector3(-9, 8, 0), new THREE.Vector3(-8.5, 5, 0));
-
-  // tembok kanan
-//   addWallSpotlight(scene, new THREE.Vector3(9.5, 5, 0), new THREE.Vector3(10, 5, 0));
+  // Add spotlights for objects
+  addSpotlight(scene, new THREE.Vector3(30, 11, 0), new THREE.Vector3(30, 0, 0)); // Statue
+  addSpotlight(scene, new THREE.Vector3(-37, 11, 4), new THREE.Vector3(-39.9, 5, 4)); // Painting 1
+  addSpotlight(scene, new THREE.Vector3(-30, 11, 7), new THREE.Vector3(-30, 5, 9.9)); // Painting 2
+  addSpotlight(scene, new THREE.Vector3(-37, 11, -5), new THREE.Vector3(-39.9, 5, -5)); // Painting 3
+  addSpotlight(scene, new THREE.Vector3(-25.5, 8, -61), new THREE.Vector3(-20.5, 3, -61)); // Statue 2
+  addSpotlight(scene, new THREE.Vector3(-37, 8, -60.75), new THREE.Vector3(-38.5, 4.2, -60.75)); // Statue 2
 }
 
 export { addLighting };
