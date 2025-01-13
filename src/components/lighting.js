@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 function addLighting(scene) {
   // Tambahkan ambient light untuk pencahayaan umum
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 2);
   scene.add(ambientLight);
 
   function addWallSpotlight(scene, position, targetPosition) {

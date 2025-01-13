@@ -22,8 +22,8 @@ function setupControls(camera, canvas, roomBuilder) {
 
   window.addEventListener('mousemove', (e) => {
     if (document.pointerLockElement === canvas) {
-      yaw -= e.movementX * 0.001;
-      pitch -= e.movementY * 0.001;
+      yaw -= e.movementX * 0.003;
+      pitch -= e.movementY * 0.003;
       pitch = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, pitch));
       camera.rotation.order = 'YXZ';
       camera.rotation.y = yaw;
@@ -40,7 +40,7 @@ function setupControls(camera, canvas, roomBuilder) {
     camera.getWorldDirection(direction);
 
     const fixedY = camera.position.y;
-    const speed = 0.1;
+    const speed = 0.3;
 
     const movement = new THREE.Vector3();
 

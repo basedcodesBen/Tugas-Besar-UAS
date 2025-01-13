@@ -25,6 +25,10 @@ function main() {
   roomBuilder.addHallway(-30, -30, 7, 40, 'longitudinal');
   roomBuilder.addWall(-23.25, 5, -10, 6.5, 10, Math.PI*2);
   roomBuilder.addWall(-36.75, 5, -10, 6.5, 10, Math.PI*2);
+  roomBuilder.addRoom(-30, -60, 20, 20, { front: true });
+  roomBuilder.addWall(-23.25, 5, -50, 6.5, 10, Math.PI);
+  roomBuilder.addWall(-36.75, 5, -50, 6.5, 10, Math.PI);
+
 
   addArtworks(scene);
 
@@ -39,11 +43,28 @@ function main() {
     { x: 0, y: Math.PI * 1.75, z: 0 } // Rotation of the model
   );
 
+  // artwork 3
   modelInserter.addModel(
-    './models/painting_patched_up.glb',        // Path to your GLTF model
-    { x: -39.9, y: 5, z: 3 },        // Position of the model
-    { x: 4.5, y: 4, z: 4 },        // Scale of the model
-    { x: 0, y: Math.PI / 2, z: 0 } // Rotation of the model
+    './models/painting_patched_up.glb',        
+    { x: -39.9, y: 5, z: 4 },        
+    { x: 4.5, y: 4, z: 4 },        
+    { x: 0, y: Math.PI / 2, z: 0 } 
+  );
+
+  // artwork 2
+  modelInserter.addModel(
+    './models/painting_patched_up.glb',        
+    { x: -30, y: 5, z: 9.9 },        
+    { x: 4.5, y: 4, z: 4 }, 
+    { x: 0, y: Math.PI, z: 0 }
+  );
+
+  // artwork 1
+  modelInserter.addModel(
+    './models/painting_patched_up.glb',        
+    { x: -39.9, y: 5, z: -5 },        
+    { x: 4.5, y: 4, z: 4 }, 
+    { x: 0, y: Math.PI / 2, z: 0 }
   );
 
   setupControls(camera, renderer.domElement, roomBuilder);
